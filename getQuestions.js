@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const { get } = require('./dbManager');
 // Connection URI
 const uri = 'mongodb://localhost:27017';
 // Database Name
@@ -23,8 +24,7 @@ async function fetchData(url) {
 }
 
 async function bulkInsert(dataToInsert) {
-    const client = new MongoClient(uri);
-
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
     try {
         await client.connect();
         const db = client.db(dbName);
@@ -56,5 +56,84 @@ function populateQuestions() {
     });
 }
 
-populateQuestions();
+//username, password, scoreHistory
+async function addUser(user) {
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection('users');
+        if (await collection.findOne({ username: user.username })) {
+            console.error('User already exists.');
+            return;
+        }
+        const result = await collection.insertOne(user);
+        console.log(`${result.insertedCount} user inserted.`);
+    } catch (error) {
+        console.error('Error adding user:', error);
+    } finally {
+        await client.close();
+    }
+}
 
+async function addScore(username, score) {
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection('users');
+        const result = await collection.updateOne({ username }, { $push: { scoreHistory: score } });
+        console.log(`${result.modifiedCount} user updated.`);
+    } catch (error) {
+        console.error('Error updating user:', error);
+    } finally {
+        await client.close();
+    }
+}
+
+async function getUser(target) {
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection('users');
+        const result = await collection.findOne({ username: target });
+        console.log(result);
+    } catch (error) {
+        console.error('Error getting user:', error);
+    } finally {
+        await client.close();
+    }
+}
+
+async function deleteUser(username) {
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection('users');
+        const result = await collection.deleteOne({ username });
+        console.log(`${result.deletedCount} user deleted.`);
+    } catch (error) {
+        console.error('Error deleting user:', error);
+    } finally {
+        await client.close();
+    }
+}
+
+// populateQuestions();
+
+let user = {
+    username: 'test',
+    password: 'password',
+    scoreHistory: []
+};
+
+async function userTest() {
+    await addUser(user);
+    await addScore('test', 100);
+    await getUser('test');
+    await deleteUser('test');
+}
+
+userTest();
