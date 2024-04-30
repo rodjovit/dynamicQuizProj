@@ -1,0 +1,89 @@
+doctype html
+html(lang="en")
+  head
+    meta(
+      content="width=device-width, initial-scale=1.0" 
+      name="viewport"
+      )
+    meta(charset="UTF-8")
+    title dq Score
+    style.
+      body {
+        background-color: #dad27a;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        }
+        .container {
+        max-width: 800px;
+        background-color: #dddddd;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        padding: 20px;
+        width: 80%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .box {
+        height: 100px;
+        border-radius: 20px;
+        font-size: 18px;
+        width: 200px;
+        display: flex;
+        margin: 5px;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        border: 2px solid #000;
+        }
+        .yay {
+        background-color: #3CB371;
+        }
+        .nay {
+        background-color: #FF6347;
+        }
+        .qbox {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 100%;
+        }
+        .nexq {
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 0;
+        height: 0;
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-left: 30px solid #66612b;
+        }
+        .nexq:hover {
+        background-color: #0056b3;
+        }
+  body
+    .container
+      //- hard coded will be changed just example of different boxes for each color
+      h1 DynaQuiz
+      .qbox
+        .box.nay Question 1
+        .box.yay Question 2
+        .box.nay Question 3
+        .box.yay Question 4
+        .box.nay Question 5
+        .box.yay Question 6
+        .box.nay Question 7
+        .box.yay Question 8
+        .box.yay Question 9
+        .box.nay Question 10
+      //- we can relay the correct/incorrect answers in this style in this file, just not sure how
+      .nexq(onclick="qpage()")
+    script.
+      function qpage() {
+        window.location.href = "question.pug"; //or html???
+        }

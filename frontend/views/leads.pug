@@ -1,0 +1,88 @@
+doctype html
+head
+  meta(charset="UTF-8")
+  meta(
+    content="width=device-width, initial-scale=1.0" 
+    name="viewport"
+    )
+  title Leaderboard
+  style.
+    body {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      background-color: #f2f2f2;
+      justify-content: center;
+      height: 100vh;
+      align-items: center;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+      }
+      .container {
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      text-align: center;
+      width: 80%;
+      padding: 20px;
+      background-color: #fff;
+      max-width: 600px;
+      }
+      h1 {
+      margin-bottom: 20px;
+      }
+      .userdsp {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      }
+      .userdspn {
+      border-radius: 5px 0 0 5px;
+      padding: 10px;
+      background-color: #dad27a;
+      color: #fff;
+      width: 45%;
+      }
+      .uscores {
+      padding: 10px;
+      background-color: #dad27a;
+      color: #fff;
+      border-radius: 0 5px 5px 0;
+      width: 45%;
+      }
+      button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #dad27a;
+      color: #fff;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      }
+      button:hover {
+      background-color: #d6ed7a;
+      }
+.container
+  h1 Leaderboard
+  .userdsp
+    //- all placeholders, easily relayble information into these classes
+    .userdspn p1
+    #placeholder1.uscores sc1
+  .userdsp
+    .userdspn p2
+    #placeholder2.uscores sc2
+  .userdsp
+    .userdspn p3
+    #placeholder3.uscores sc3
+  .userdsp
+    .userdspn p4
+    #placeholder4.uscores sc4
+  .userdsp
+    .userdspn pssss5
+    #placeholder5.uscores sc5
+  button(onclick="gpage()") select new genre
+script.
+  function gpage() {
+    window.location.href = "genre.pug"; //or html? not sure, just want it to go there
+    }

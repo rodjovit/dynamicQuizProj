@@ -1,0 +1,95 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(
+      content="width=device-width, initial-scale=1.0" 
+      name="viewport"
+      )
+    title DynaQuiz
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #dad27a;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100;
+        }
+        .container {
+        max-width: 800px;
+        width: 80%;
+        background-color: #a9a9a9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+        }
+        .question {
+        margin-bottom: 20px;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        }
+        .options {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        }
+        .option {
+        width: 100%;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #ddd;
+        text-align: center;
+        cursor: pointer;
+        margin-bottom: 20px;
+        }
+        .option:hover {
+        background-color: #c4c4c4;
+        }
+        button {
+        padding: 10px 20px;
+        background-color: #66612b;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+        button:hover {
+        background-color: #dad27a;
+        }
+  body
+    .container
+      h1 DynaQuiz
+      .question
+        p Place Holder Question
+        ul.options
+          // if we are generating on the side, can easily reroute string to here
+          li.option(onclick="choosebtn(this)") Answer One
+          li.option(onclick="choosebtn(this)") Answer Two
+          li.option(onclick="choosebtn(this)") Answer Three
+          li.option(onclick="choosebtn(this)") Answer Four
+      // choose button saves the option, we need to reprogram this to send answer to db, save, and move on
+      button(onclick="sendans()") Next Question
+    script.
+      var opsel = null;
+        function choosebtn(option) {
+        if (opsel) {
+        opsel.style.backgroundColor = "#ddd";
+        }
+        opsel = option;
+        option.style.backgroundColor = "#dad27a";
+        }
+        function sendans() {
+        if (opsel === null) {
+        alert("Please select an option.");
+        return;
+        }
+        }
