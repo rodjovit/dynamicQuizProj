@@ -5,9 +5,32 @@ const uri = 'mongodb://localhost:27017';
 // Database Name
 const dbName = 'dynamicQuiz';
 // URL of the API
-const easyQ = 'https://opentdb.com/api.php?amount=31&category=9&difficulty=easy&type=boolean';
-const medQ = 'https://opentdb.com/api.php?amount=30&category=9&difficulty=medium&type=boolean';
-const hardQ = 'https://opentdb.com/api.php?amount=6&category=9&difficulty=hard&type=boolean';
+const generalEasyQ = 'https://opentdb.com/api.php?amount=31&category=9&difficulty=easy&type=boolean';
+const generalMedQ = 'https://opentdb.com/api.php?amount=30&category=9&difficulty=medium&type=boolean';
+const generalHardQ = 'https://opentdb.com/api.php?amount=6&category=9&difficulty=hard&type=boolean';
+// const mathEasyQ = require('./mathEasyQ.json');
+// const mathHardQ = require('./mathHardQ.json');
+// const historyEasyQ = require('./historyEasyQ.json');
+
+let user = {
+    username: 'test',
+    password: 'password',
+    scoreHistory: []
+};
+
+let user2 = {
+    username: 'test2',
+    password: 'password',
+    scoreHistory: []
+};
+let user3 = {
+    username: 'test3',
+    password: 'password',
+    scoreHistory: []
+};
+
+let people = [user, user2, user3];
+
 
 // Function to fetch the data from the API
 async function fetchData(url) {
@@ -37,16 +60,31 @@ async function bulkInsert(dataToInsert) {
     }
 }
 
+async function addQuestion(question) {
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection('questions');
+        const result = await collection.insertOne(question);
+        console.log(`${result.insertedCount} question inserted.`);
+    } catch (error) {
+        console.error('Error adding question:', error);
+    } finally {
+        await client.close();
+    }
+}
+
 function populateQuestions() {
-    fetchData(easyQ).then(data => {
+    fetchData(generalEasyQ).then(data => {
         bulkInsert(data);
         console.log('Easy questions inserted successfully');
         setTimeout(() => {
-            fetchData(medQ).then(data => {
+            fetchData(generalMedQ).then(data => {
                 bulkInsert(data);
                 console.log('Medium questions inserted successfully');
                 setTimeout(() => {
-                    fetchData(hardQ).then(data => {
+                    fetchData(generalHardQ).then(data => {
                         bulkInsert(data);
                         console.log('Hard questions inserted successfully');
                     });
@@ -121,19 +159,20 @@ async function deleteUser(username) {
     }
 }
 
-// populateQuestions();
-
-let user = {
-    username: 'test',
-    password: 'password',
-    scoreHistory: []
-};
-
 async function userTest() {
-    await addUser(user);
+    for (let person of people) {
+        await addUser(person);
+    }
     await addScore('test', 100);
+    await addScore('test2', 50);
+    await addScore('test3', 75);
     await getUser('test');
-    await deleteUser('test');
+    // await deleteUser('test');
+    // await deleteUser('test2');
+    // await deleteUser('test3');
 }
 
-userTest();
+// userTest();
+// populateQuestions();
+addQuestion({ question: 'Paris is the capital of France?', correct_answer: 'True', incorrect_answers: ['False'],
+category: 'General Knowledge', difficulty: 'easy'});
