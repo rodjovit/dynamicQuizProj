@@ -43,27 +43,50 @@ html(lang="en")
         .input-group input[type="submit"]:hover {
         background-color: #4e4a30;
         }
+        .footer {
+        margin-top: 20px;
+        text-align: center;
+        }
+       .footer a {
+        text-decoration: none;
+        color: #333;
+        margin: 0 10px;
+        }
+      .footer a:hover {
+        color: #555;
+        }
   body
     .container
       //- drop down menu to select question genre and difficulty, save this
       form(
-        method="GET" 
-        action="question.pug" //again, or .html?? just want it to go there
+        method="POST" 
+        action="/question" 
         )
         .input-group
-          label(for="genre") Select Genre:
-          select#genre(name="genre")
-            option(value="history") History
-            option(value="math") Math
-            option(value="science") Science
-        .input-group
           label(for="difficulty") Select Difficulty:
-          select#difficulty(name="difficulty")
-            option(value="easy") Easy
-            option(value="medium") Medium
-            option(value="hard") Hard
+          select(name='difficulty')
+            option(value='easy') Easy
+            option(value='medium') Medium
+            option(value='hard') Hard
+        .input-group
+          label(for="category") Select Category:
+          select(name='category')
+            option(value='Science: Mathematics') Math
+            option(value='General Knowledge') General Knowledge
+            option(value='Science &amp; Nature') Science
         .input-group
           input(
             value="Next" 
             type="submit"
             )
+  block footer
+    a(href='/login') Login
+    |
+    |
+    a(href='/register') Register 
+    |
+    |
+    a(href='/add_question') Add Question
+    |
+    |
+    a(href='/logout') Logout 

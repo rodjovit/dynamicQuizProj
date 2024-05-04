@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+  head
+    block styles
+      style 
+        include ../public/styles.css
+	
+    title= "Dynamic Quiz"
+  body
+    header 
+      block homeLink
+        if trusted
+          a(href='/users/'+trusted.name) My Page
+
+    h1 Welcome to the Dynamic Quiz!
+  
+
+    block content
+
+  block footer
+   
+      a(href='/login') Login
+      |
+      |
+      a(href='/register') Register 
+      |
+      |
+      a(href='/add_question') Add Question
+      |
+      |
+      a(href='/logout') Logout 
+

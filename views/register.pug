@@ -1,0 +1,28 @@
+extends layout 
+block content 
+
+    h3 Register Page
+    form(method="POST") 
+        | Username: 
+        |
+        input(name="username")
+        br
+        |Password: 
+        input(name="password", type="password")
+        br
+        br
+        input(type="submit" value="Register")
+    br
+    br 
+    br
+    block footer
+      a(href='/login') Login
+      |
+      |
+      a(href='/register') Register 
+      |
+      |
+      a(href='/add_question') Add Question
+      |
+      |
+      a(href='/logout') Logout 

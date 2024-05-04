@@ -68,28 +68,56 @@ html(lang="en")
   body
     .container
       h1 DynaQuiz
-      .question
-        p Place Holder Question
-        ul.options
-          // if we are generating on the side, can easily reroute string to here
-          li.option(onclick="choosebtn(this)") Answer One
-          li.option(onclick="choosebtn(this)") Answer Two
-          li.option(onclick="choosebtn(this)") Answer Three
-          li.option(onclick="choosebtn(this)") Answer Four
-      // choose button saves the option, we need to reprogram this to send answer to db, save, and move on
-      button(onclick="sendans()") Next Question
+      each question in questions
+        .question
+          p #{question.question}
+            .input-group 
+              label(for="answer")
+              select(name='answer' onchange=`chooseOption("${question.question}", this.value, '${question.correct_answer}')`)
+                option(value='') Select an option
+                option(value='True') True
+                option(value='False') False
+      form(method="POST" action="/scores")
+        input(type='submit', value='Submit Answers')
+        input(type="hidden" name="userAnswers" value=userAnswers)
+        input(type="hidden" name="realAnswers" value=realAnswers)
+      //- button(
+      //-   type="button"
+      //-   onclick="lpage()"
+      //- ) Submit Answers
+    block footer
+  
+    a(href='/login') Login
+    |
+    |
+    a(href='/register') Register 
+    |
+    |
+    a(href='/add_question') Add Question
+    |
+    |
+    a(href='/logout') Logout 
     script.
-      var opsel = null;
-        function choosebtn(option) {
-        if (opsel) {
-        opsel.style.backgroundColor = "#ddd";
+      let userAnswers = [];
+      let realAnswers = [];
+      let numCorrect = 0;
+      function chooseOption(question, option, cAnswers) {
+        userAnswers[question] = option;
+        realAnswers[question] = cAnswers;
+        const selectedOption = userAnswers[question]; 
+        const correctAnswer = realAnswers[question];
+        if (!selectedOption) {
+            alert("Please select an option");
+            return;
         }
-        opsel = option;
-        option.style.backgroundColor = "#dad27a";
+        const isCorrect = selectedOption === correctAnswer;
+        if (isCorrect) {
+          numCorrect ++;
         }
-        function sendans() {
-        if (opsel === null) {
-        alert("Please select an option.");
-        return;
-        }
-        }
+      console.log(userAnswers);
+      console.log(realAnswers);
+      console.log(numCorrect);
+      }
+      function lpage() {
+        window.location.href = "/scores"; 
+      }  

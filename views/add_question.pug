@@ -1,0 +1,45 @@
+extends layout 
+block content 
+
+    h3 Add Question Page
+    form(method="POST") 
+        |Question : 
+        |
+        input(name="question", type="text")
+        br
+        |Answer : 
+        select(name='correct_answer')
+            option(value='True') True 
+            option(value='False') False
+        br
+        |Incorrect Answer:
+        select(name='incorrect_answer')
+            option(value='True') True 
+            option(value='False') False
+        br
+        |Difficulty :
+        select(name='difficulty')
+            option(value='easy') Easy
+            option(value='medium') Medium
+            option(value='hard') Hard
+        br
+        |Category :
+        select(name='category')
+            option(value='Science: Mathematics') Math
+            option(value='General Knowledge') General Knowledge
+            option(value='Science &amp; Nature') Science
+        input(type="submit" value="Add Question")
+    br
+    br 
+    br
+block footer
+      a(href='/login') Login
+      |
+      |
+      a(href='/register') Register 
+      |
+      |
+      a(href='/add_question') Add Question
+      |
+      |
+      a(href='/logout') Logout

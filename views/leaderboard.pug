@@ -63,26 +63,37 @@ head
       button:hover {
       background-color: #d6ed7a;
       }
+        .footer {
+        margin-top: 20px;
+        text-align: center;
+        }
+       .footer a {
+        text-decoration: none;
+        color: #333;
+        margin: 0 10px;
+        }
+      .footer a:hover {
+        color: #555;
+        }
 .container
   h1 Leaderboard
-  .userdsp
-    //- all placeholders, easily relayble information into these classes
-    .userdspn p1
-    #placeholder1.uscores sc1
-  .userdsp
-    .userdspn p2
-    #placeholder2.uscores sc2
-  .userdsp
-    .userdspn p3
-    #placeholder3.uscores sc3
-  .userdsp
-    .userdspn p4
-    #placeholder4.uscores sc4
-  .userdsp
-    .userdspn pssss5
-    #placeholder5.uscores sc5
+  each user in users
+    .userdsp
+      .userdspn #{user.username}
+      .uscores #{user.scoreHistory[0]}
   button(onclick="gpage()") select new genre
+  block footer
+      a(href='/login') Login
+      |
+      |
+      a(href='/register') Register 
+      |
+      |
+      a(href='/add_question') Add Question
+      |
+      |
+      a(href='/logout') Logout 
 script.
   function gpage() {
-    window.location.href = "genre.pug"; //or html? not sure, just want it to go there
+    window.location.href = "select"; //or html? not sure, just want it to go there
     }

@@ -66,10 +66,22 @@ html(lang="en")
         .nexq:hover {
         background-color: #0056b3;
         }
+        .footer {
+        margin-top: 20px;
+        text-align: center;
+        }
+       .footer a {
+        text-decoration: none;
+        color: #333;
+        margin: 0 10px;
+        }
+      .footer a:hover {
+        color: #555;
+        }
   body
     .container
       //- hard coded will be changed just example of different boxes for each color
-      h1 DynaQuiz
+      h1 Scores
       .qbox
         .box.nay Question 1
         .box.yay Question 2
@@ -82,8 +94,19 @@ html(lang="en")
         .box.yay Question 9
         .box.nay Question 10
       //- we can relay the correct/incorrect answers in this style in this file, just not sure how
-      .nexq(onclick="qpage()")
+      .nexq(onclick="lpage()")
+  block footer
+  a(href='/login') Login
+  |
+  |
+  a(href='/register') Register 
+  |
+  |
+  a(href='/add_question') Add Question
+  |
+  |
+  a(href='/logout') Logout 
     script.
-      function qpage() {
-        window.location.href = "question.pug"; //or html???
-        }
+      function lpage() {
+        window.location.href = "leaderboard"; 
+      }

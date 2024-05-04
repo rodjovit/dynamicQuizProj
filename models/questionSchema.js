@@ -3,20 +3,26 @@ let mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema({
 	question_id: {
-		type: String,
-        required: [true, 'Question ID Required']
+		type: String
 	},
+    type:{
+        type: Boolean
+    },
 	question:{
 		type: String,
         required: [true, 'Question Required']
 	},
-	answer:{
+	correct_answer:{
 		type: String,
         required: [true, 'Answer Required']
     },
-    genre:{
+    incorrect_answers:{
+        type: Array,
+        required: [true, 'Incorrect Answers Required']
+    },
+    category:{
         type: String,
-        required: [true, 'Genre Required']
+        required: [true, 'Category Required']
     },
     difficulty:{
         type: String,
