@@ -82,17 +82,17 @@ head
       .userdspn #{user.username}
       .uscores #{user.scoreHistory[0]}
   button(onclick="gpage()") select new genre
-  block footer
-      a(href='/login') Login
-      |
-      |
-      a(href='/register') Register 
-      |
-      |
-      a(href='/add_question') Add Question
-      |
-      |
-      a(href='/logout') Logout 
+block footer
+    a(href='/login') Login
+    |
+    |
+    a(href='/register') Register 
+    |
+    |
+    a(href='/add_question') Add Question
+    |
+    |
+    a(href='/logout') Logout 
 script.
   function gpage() {
     window.location.href = "select"; //or html? not sure, just want it to go there

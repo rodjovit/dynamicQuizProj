@@ -8,9 +8,12 @@ const dbName = 'dynamicQuiz';
 const generalEasyQ = 'https://opentdb.com/api.php?amount=31&category=9&difficulty=easy&type=boolean';
 const generalMedQ = 'https://opentdb.com/api.php?amount=30&category=9&difficulty=medium&type=boolean';
 const generalHardQ = 'https://opentdb.com/api.php?amount=6&category=9&difficulty=hard&type=boolean';
-// const mathEasyQ = require('./mathEasyQ.json');
-// const mathHardQ = require('./mathHardQ.json');
-// const historyEasyQ = require('./historyEasyQ.json');
+const mathEasyQ = 'https://opentdb.com/api.php?amount=6&category=19&difficulty=easy&type=boolean';
+const mathMedQ = 'https://opentdb.com/api.php?amount=8&category=19&difficulty=medium&type=boolean';
+const mathHardQ = 'https://opentdb.com/api.php?amount=4&category=19&difficulty=hard&type=boolean';
+const scienceEasyQ = 'https://opentdb.com/api.php?amount=11&category=17&difficulty=easy&type=boolean';
+const scienceMedQ = 'https://opentdb.com/api.php?amount=20&category=17&difficulty=medium&type=boolean';
+const scienceHardQ = 'https://opentdb.com/api.php?amount=3&category=17&difficulty=hard&type=boolean';
 
 let user = {
     username: 'test',
@@ -60,21 +63,6 @@ async function bulkInsert(dataToInsert) {
     }
 }
 
-async function addQuestion(question) {
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
-    try {
-        await client.connect();
-        const db = client.db(dbName);
-        const collection = db.collection('questions');
-        const result = await collection.insertOne(question);
-        console.log(`${result.insertedCount} question inserted.`);
-    } catch (error) {
-        console.error('Error adding question:', error);
-    } finally {
-        await client.close();
-    }
-}
-
 function populateQuestions() {
     fetchData(generalEasyQ).then(data => {
         bulkInsert(data);
@@ -85,6 +73,45 @@ function populateQuestions() {
                 console.log('Medium questions inserted successfully');
                 setTimeout(() => {
                     fetchData(generalHardQ).then(data => {
+                        bulkInsert(data);
+                        console.log('Hard questions inserted successfully');
+                    });
+                }, 5000);
+            });
+        }, 5000);
+    });
+}
+
+function populateMathQuestions() {
+    fetchData(mathEasyQ).then(data => {
+        bulkInsert(data);
+        console.log('Easy questions inserted successfully');
+        setTimeout(() => {
+            fetchData(mathMedQ).then(data => {
+                bulkInsert(data);
+                console.log('Medium questions inserted successfully');
+                setTimeout(() => {
+                    fetchData(mathHardQ).then(data => {
+                        bulkInsert(data);
+                        console.log('Hard questions inserted successfully');
+                    });
+                }, 5000);
+            });
+        }, 5000);
+    });
+}
+
+function populateScienceQuestions() {
+    fetchData(scienceEasyQ).then(data => {
+        console.log(data)
+        bulkInsert(data);
+        console.log('Easy questions inserted successfully');
+        setTimeout(() => {
+            fetchData(scienceMedQ).then(data => {
+                bulkInsert(data);
+                console.log('Medium questions inserted successfully');
+                setTimeout(() => {
+                    fetchData(scienceHardQ).then(data => {
                         bulkInsert(data);
                         console.log('Hard questions inserted successfully');
                     });
@@ -144,21 +171,6 @@ async function getUser(target) {
     }
 }
 
-async function deleteUser(username) {
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
-    try {
-        await client.connect();
-        const db = client.db(dbName);
-        const collection = db.collection('users');
-        const result = await collection.deleteOne({ username });
-        console.log(`${result.deletedCount} user deleted.`);
-    } catch (error) {
-        console.error('Error deleting user:', error);
-    } finally {
-        await client.close();
-    }
-}
-
 async function userTest() {
     for (let person of people) {
         await addUser(person);
@@ -166,13 +178,17 @@ async function userTest() {
     await addScore('test', 100);
     await addScore('test2', 50);
     await addScore('test3', 75);
-    await getUser('test');
+    // await getUser('test');
     // await deleteUser('test');
     // await deleteUser('test2');
     // await deleteUser('test3');
 }
 
-// userTest();
-// populateQuestions();
-addQuestion({ question: 'Paris is the capital of France?', correct_answer: 'True', incorrect_answers: ['False'],
-category: 'General Knowledge', difficulty: 'easy'});
+userTest();
+populateGeneralQuestions();
+setTimeout(() => {
+    populateMathQuestions();
+    setTimeout(() => {
+        populateScienceQuestions();
+    }, 18000);
+}, 18000);

@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 const { MongoClient } = require('mongodb');
 const uri = 'mongodb://localhost:27017/dynamicQuiz';
 const bodyParser = require('body-parser');
-const questionSchema = require('./models/questionSchema');
-const userSchema = require('./models/userSchema');
 const questionCol = require('./models/questionSchema');
 const userCol = require('./models/userSchema');
 var session = require('express-session');
@@ -194,8 +192,6 @@ app.post('/question', express.urlencoded({extended:false}), async (req, res, nex
             cAnswers.push(question.correct_answer)
         }
          //array logic goes here
-        //  const results = [];
-        //  for
 
 
         //update user scoreHistory goes here
