@@ -3,7 +3,7 @@ Project for ADV PRG WS: JS
 
 STARTUP:
 
-- The only prerequisite before starting the app.js file is that the user needs to run the "getQuestions.js" file.
+- The only prerequisite before starting the app.js file is that the user needs to run the "getQuestions.js" file via "node getQuestions.js"
     - This will instantiate the local database and the user and question collections.
 - Once getQuestions.js is ran, the user may then run the app.js file, which will start the app @ localhost:3000
 
